@@ -2,8 +2,13 @@ var articles = {};
 var purchase = {};
 var countries = {};
 
+var cookie = {
+    'id': 'cookie_page',
+    'value': null
+}
+
 var ENVIROMENT = 'development';
-var test_url = 'http://localhost/BACK/';
+var test_url = 'http://localhost/AdBullion_WorkingTest_BACK/';
 
 function articles_show(data) {
 
@@ -76,17 +81,37 @@ function load_2(data) {
         countries[data[i].id] = data[i];
     }
 
-    load_ajaxly(test_url+"init.php/Articles/get_articles", ["data", "bb"], true, "#articles", articles_show);
+    load_ajaxly(test_url + "init.php/Articles/get_articles", ["data", "bb"], true, "#articles", articles_show);
+}
+
+function set_page() {
+    cookie.value = $.cookie(cookie.id);
+
+    if (empty(cookie.value)) {
+        cookie.value = Math.random();
+        $.cookie(cookie.id, cookie.value);
+
+        cookie.value = $.cookie(cookie.id);
+        console.log(cookie.value);
+    } else {
+        console.warn(cookie.value);
+    }
+
+    $(window).bind('beforeunload', function () {
+        $.removeCookie(cookie.id);
+    });
 }
 
 // Create a new anonymous function, to use as a wrapper
 (function () {
-    
-    if(ENVIROMENT !== 'development' || document.URL.indexOf("localhost") <= -1){
+
+    set_page();
+
+    if (ENVIROMENT !== 'development' || document.URL.indexOf("localhost") <= -1) {
         test_url = '';
     }
-    
+
     $("#purchase_article").validate();
-    load_ajaxly(test_url+"init.php/Page/get_country", [], true, "#articles", load_2);
+    load_ajaxly(test_url + "init.php/Page/get_country", [], true, "#articles", load_2);
 
 })();

@@ -54,7 +54,7 @@ function empty(mixed_var) {
 }
 
 unsetpreload = function () {
-    $('#waiting4').waiting('destroy');
+    //$('#waiting4').waiting('destroy');
 };
 
 jQuery.fn.exists = function () {
@@ -62,7 +62,7 @@ jQuery.fn.exists = function () {
 };
 
 preload = function () {
-    if (!$("#waiting4").exists()) {
+    /*if (!$("#waiting4").exists()) {
         $('body').append('<div><div id="waiting4"><center>Cargando</center></div></div>');
     }
     $('#waiting4').waiting({
@@ -70,7 +70,7 @@ preload = function () {
         elements: 8,
         radius: 30,
         auto: true
-    });
+    });*/
 };
 
 function send_ajaxly(url, data, async, redirect) {
@@ -214,30 +214,3 @@ $(document).ready(function () {
         });
     });
 });
-
-function writeCookie(name, value, days) {
-    var date, expires;
-    if (days) {
-        date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-    } else {
-        expires = "";
-    }
-    document.cookie = name + "=" + value + expires + "; path=/";
-}
-
-function readCookie(name) {
-    var i, c, ca, nameEQ = name + "=";
-    ca = document.cookie.split(';');
-    for (i = 0; i < ca.length; i++) {
-        c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1, c.length);
-        }
-        if (c.indexOf(nameEQ) == 0) {
-            return c.substring(nameEQ.length, c.length);
-        }
-    }
-    return '';
-}
