@@ -38,4 +38,5 @@ define("BASE", $base_url . $base_page);
 
 define("ARTICLE", "article");
 define("COUNTRY", "country");
+define("PAGE", "pagevisit");
 
