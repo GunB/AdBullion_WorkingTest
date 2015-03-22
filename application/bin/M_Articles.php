@@ -13,16 +13,23 @@
  */
 class M_Articles {
 
-    public function get_articles($args = []) {
-        $db = new Database();
+    public function get_articles($args = [], $db = null) {
+        $bolDb = true;
+        if (empty($db)) {
+            $db = new Database();
+            $bolDb = false;
+        }
         $articles = $db->simple_select(ARTICLE, $args);
-        unset($db);
+
+        if (!$bolDb)
+            unset($db);
+
         return $articles;
     }
 
-    public function verify_article($args) {
+    public function verify_article($args, $db = null) {
         //$args = array('params' => $args);
-        $data = $this->get_articles($args);
+        $data = $this->get_articles($args, $db);
 
         return empty($data) ? null : $data[0];
     }

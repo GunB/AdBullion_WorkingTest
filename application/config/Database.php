@@ -36,6 +36,10 @@ class Database {
         //echo 'Conectado satisfactoriamente';
         //mysql_close($enlace);
     }
+    
+    function last_insert_id(){
+        return $this->enlace->insert_id;
+    }
 
     function do_query($strquery, $bolcontinue_chain = false) {
         $resp = [];
@@ -138,7 +142,7 @@ class Database {
         return $this->do_query($query);
     }
 
-    function simple_insert($table, $args) {
+    function simple_insert($table, $args, $boolchain = false) {
         $args = (object) $args;
 
         $query = "INSERT INTO $table  ";
@@ -154,7 +158,7 @@ class Database {
 
         $query .= "( " . implode(",", $columns) . " ) VALUES ( " . implode(",", $values) . " )";
 
-        return $this->do_query($query);
+        return $this->do_query($query, $boolchain);
     }
 
     function simple_update($table, $new_data, $identifiers) {

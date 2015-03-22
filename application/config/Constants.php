@@ -40,5 +40,8 @@ define("ARTICLE", "article");
 define("COUNTRY", "country");
 define("PAGE", "pagevisit");
 define("PURCHASE", "order");
+
+define("PURCHASE_ARTICLE_ORDER", "order_has_article");
+
 define("CLIENT", "client");
 

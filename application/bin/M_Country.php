@@ -12,19 +12,26 @@
  * @author Heiner
  */
 class M_Country {
-    
-    public function get_country($args = []) {
-        $db = new Database();
+
+    public function get_country($args = [], $db = null) {
+        $bolDb = true;
+        if (empty($db)) {
+            $db = new Database();
+            $bolDb = false;
+        }
         $data = $db->simple_select(COUNTRY, $args);
-        unset($db);
+        
+        if (!$bolDb)
+            unset($db);
+        
         return $data;
     }
-    
-    public function verify_country($args){
+
+    public function verify_country($args, $db = null) {
         //$args = array('params' => $args);
-        $data = $this->get_country($args);
-        
+        $data = $this->get_country($args, $db);
+
         return empty($data) ? null : $data[0];
     }
-    
+
 }

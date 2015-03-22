@@ -18,7 +18,7 @@ class Page {
     }
 
     public function get_country() {
-        $m_country = new M_Page();
+        $m_country = new M_Country();
         $country = $m_country->get_country();
 
         echo (json_encode($country));
