@@ -14,7 +14,7 @@
 class Email {
 
     public static function verify_email($email) {
-        return; !empty(filter_var($email, FILTER_VALIDATE_EMAIL));
+        return !empty(filter_var($email, FILTER_VALIDATE_EMAIL));
     }
 
 }
