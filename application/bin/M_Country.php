@@ -7,24 +7,24 @@
  */
 
 /**
- * Description of Articles
+ * Description of M_Country
  *
  * @author Heiner
  */
-class M_Articles {
-
-    public function get_articles($args = []) {
+class M_Country {
+    
+    public function get_country($args = []) {
         $db = new Database();
-        $articles = $db->simple_select(ARTICLE, $args);
+        $data = $db->simple_select(COUNTRY, $args);
         unset($db);
-        return $articles;
+        return $data;
     }
-
-    public function verify_article($args) {
+    
+    public function verify_country($args){
         //$args = array('params' => $args);
-        $data = $this->get_articles($args);
-
+        $data = $this->get_country($args);
+        
         return empty($data) ? null : $data[0];
     }
-
+    
 }
