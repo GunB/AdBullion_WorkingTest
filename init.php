@@ -129,13 +129,13 @@ function error($data) {
     echo 'The application environment is not set correctly.';
     header('Content-Type: application/json; charset=UTF-8');
     //var_dump($_SERVER);
-    
+
     $error_arr = array('message' => 'ERROR', 'code' => 1444);
-    
-    if(ENVIRONMENT === 'development'){
+
+    if (ENVIRONMENT === 'development') {
         $error_arr = array_merge($error_arr, ['file' => $data['file'], 'line' => $data['line']], $_GET, $_POST, $_SERVER);
     }
-    
+
     die(json_encode($error_arr));
 }
 
@@ -146,15 +146,21 @@ if ((!$_SERVER["CROSSDOMAINCHECK"]) && ENVIRONMENT != 'development') {
 
 // Invalid characters
 
-foreach ($_POST as $key => $value) {
-    $_POST[$key] = htmlspecialchars($value);
-}
-array_filter($_POST);
+function invalid_fixing($data) {
+    foreach ($data as $key => $value) {
 
-foreach ($_GET as $key => $value) {
-    $_GET[$key] = htmlspecialchars($value);
+        if (is_array($value) || is_object($value)) {
+            $data[$key] = invalid_fixing($value);
+        } else {
+            $data[$key] = htmlspecialchars($value);
+        }
+    }
+    array_filter($data);
+    return $data;
 }
-array_filter($_GET);
+
+$_GET = invalid_fixing($_GET);
+$_POST = invalid_fixing($_POST);
 
 /*
  * ---------------------------------------------------------------
@@ -165,8 +171,8 @@ array_filter($_GET);
  * 
  */
 
-$uri = array_filter(explode("/", filter_input(INPUT_SERVER, "PATH_INFO")));
-$uri = array_merge($uri, array_filter(explode("/", filter_input(INPUT_SERVER, "QUERY_STRING"))));
+$uri = array_filter(explode("/", htmlspecialchars(filter_input(INPUT_SERVER, "PATH_INFO"))));
+$uri = array_merge($uri, array_filter(explode("/", htmlspecialchars(filter_input(INPUT_SERVER, "QUERY_STRING")))));
 foreach ($uri as $key => $value) {
     $value = htmlspecialchars($value);
     $value = strpos($value, "?") ? substr($value, 0, strpos($value, "?")) : $value; //Macheteo de NGINX
