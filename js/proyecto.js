@@ -54,7 +54,7 @@ function empty(mixed_var) {
 }
 
 unsetpreload = function () {
-    //$('#waiting4').waiting('destroy');
+    $.modal.close();
 };
 
 jQuery.fn.exists = function () {
@@ -62,15 +62,11 @@ jQuery.fn.exists = function () {
 };
 
 preload = function () {
-    /*if (!$("#waiting4").exists()) {
-     $('body').append('<div><div id="waiting4"><center>Cargando</center></div></div>');
-     }
-     $('#waiting4').waiting({
-     className: 'waiting-circles',
-     elements: 8,
-     radius: 30,
-     auto: true
-     });*/
+    if (!$("#waiting4").exists()) {
+        $('body').append('<div><div id="waiting4"><center>Cargando</center></div></div>');
+    }
+    
+    $("#waiting4").modal({showClose: false});
 };
 
 function send_ajaxly(url, data, async, redirect) {
@@ -115,9 +111,13 @@ function send_ajaxly(url, data, async, redirect) {
     });
 }
 
-function load_ajaxly(url, data, async, selector, funct) {
+function load_ajaxly(url, data, async, selector, funct, type) {
     if (typeof async === 'undefined') {
         async = true;
+    }
+    
+    if(empty(type)){
+        type = "text";
     }
 
     //console.log(async);
@@ -127,19 +127,20 @@ function load_ajaxly(url, data, async, selector, funct) {
         url: url,
         data: data,
         timeout: 3000,
-        dataType: 'json',
+        dataType: type,
         async: async,
         beforeSend: function () {
             preload();
         },
         complete: function () {
-            unsetpreload();
+            
         },
         cache: false,
         success: function (data, textStatus, jqXHR) {
             if (typeof funct !== 'undefined') {
                 funct(data);
             } else {
+                unsetpreload();
                 $(selector).html(data);
             }
 
