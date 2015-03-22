@@ -61,7 +61,7 @@ class Database {
             }
         }
 
-        if ($resultado) {
+        if ($resultado && !is_bool($resultado)) {
             while ($obj = mysqli_fetch_object($resultado)) {
                 //var_dump($obj);
                 array_push($resp, $obj);
@@ -110,6 +110,12 @@ class Database {
             array_push($arr_query, "where id = '$args->id'");
         }
 
+        if (isset($args->params)) {
+            foreach ($args->params as $key => $value) {
+                array_push($arr_query, "where $key = '$value'");
+            }
+        }
+
         if (isset($args->in)) {
             array_push($arr_query, "where id in ('" . implode("','", $args->in) . "')");
         }
@@ -126,8 +132,51 @@ class Database {
         if (isset($args->limit)) {
             $query .= " limit $args->limit ";
         }
-        
+
         //var_dump($query);
+
+        return $this->do_query($query);
+    }
+
+    function simple_insert($table, $args) {
+        $args = (object) $args;
+
+        $query = "INSERT INTO $table  ";
+
+        $columns = [];
+        $values = [];
+
+        foreach ($args as $key => $value) {
+            //"(column1, column2, column3,...) VALUES (value1, value2, value3,...)"
+            $columns[] = "$key";
+            $values[] = "'$value'";
+        }
+
+        $query .= "( " . implode(",", $columns) . " ) VALUES ( " . implode(",", $values) . " )";
+
+        return $this->do_query($query);
+    }
+
+    function simple_update($table, $new_data, $identifiers) {
+        $query = "UPDATE $table ";
+
+        $data_nueva = [];
+        $data_compare = [];
+
+        foreach ($new_data as $key => $value) {
+            if ($value === null) {
+                $data_nueva[] = "$key = NULL";
+            } else {
+                $data_nueva[] = "$key = '$value'";
+            }
+        }
+
+        foreach ($identifiers as $key => $value) {
+            $data_compare[] = "$key = '$value'";
+        }
+
+        $query .= " SET " . implode(" , ", $data_nueva);
+        $query .= " where " . implode(" and ", $data_compare);
 
         return $this->do_query($query);
     }
