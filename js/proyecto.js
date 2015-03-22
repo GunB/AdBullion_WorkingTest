@@ -81,7 +81,7 @@ function send_ajaxly(url, data, async, redirect) {
         type: "POST",
         url: url,
         data: data,
-        timeout: 3000,
+        timeout: 5000,
         async: async,
         //dataType: 'json',
         beforeSend: function () {
@@ -126,7 +126,7 @@ function load_ajaxly(url, data, async, selector, funct, type) {
         type: "POST",
         url: url,
         data: data,
-        timeout: 3000,
+        timeout: 5000,
         dataType: type,
         async: async,
         beforeSend: function () {
