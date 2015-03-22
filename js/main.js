@@ -8,7 +8,7 @@ var cookie = {
 };
 
 var ENVIROMENT = 'development';
-var test_url = 'http://localhost/AdBullion_WorkingTest_BACK/';
+var test_url = 'http://localhost/AdBullion_WorkingTest_BACKK/';
 
 function articles_show(data) {
 
