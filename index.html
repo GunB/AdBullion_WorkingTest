@@ -1,0 +1,210 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Test Work</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+
+        <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="/img/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+        <link rel="manifest" href="/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/responsive.css">
+
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!--------------Header--------------->
+        <header>
+            <div class="wrap-header gridsystem">
+                <div id="logo"><a href="#"><img src="http://placehold.it/339x65&text=logo"/></a></div>
+                <nav>
+                    <div class="wrap-nav">
+                        <div class="menu">
+                            <ul>
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">Gallery</a></li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#" onclick="unset_page()">Contact</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="minimenu"><div>MENU</div>
+                            <select onchange="location = this.value">
+                                <option></option>
+                                <option value="index.html">Home</option>
+                                <option value="#">Blog</option>
+                                <option value="#">Gallery</option>
+                                <option value="#">About</option>
+                                <option value="#">Contact</option>
+                            </select>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!--------------Content--------------->
+        <section id="content">
+            <div class="wrap-content gridsystem">
+                <div class="row block">
+                    <div id="main-content" class="col-2-3">
+                        <div class="wrap-col" id="articles">
+
+                            <!--- Articles -->
+
+                            <!--<article>
+                                <div class="heading">
+                                    <h2><a href="#">Sed accumsan libero quis mi commodo et suscipit</a></h2>
+                                    <div class="info">By Admin on December 01, 2012 with <a href="#">01 Commnets</a></div>
+                                </div>
+                                <div class="content">
+                                    <img src="http://placehold.it/200x200"/>
+                                    <div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac suscipit ligula. Nam vitae ullamcorper nisl, ut convallis sapien. Curabitur ac felis ut magna luctus dapibus. Nam viverra id est quis aliquet. Nulla sed egestas arcu, id dignissim dolor. Integer dictum malesuada diam, vel bibendum est bibendum a. Donec nec lacus posuere, faucibus odio sit amet, iaculis felis. Aliquam erat volutpat. Nam feugiat finibus neque, nec ultricies tortor porttitor ac. Sed sed nibh eu sem suscipit imperdiet. Phasellus porta tempor ante, eget eleifend quam auctor sed. Cras rhoncus tristique molestie.</p></div>
+                                    <p class="more"><a class="button" href="#">Read more</a></p>
+                                </div>
+                            </article>-->
+
+                            <!--/ Articles -->
+
+                        </div>
+                    </div>
+
+                    <div id="sidebar" class="col-1-3">
+                        <div class="wrap-col">
+
+                            <form class="box" id="purchase_article">
+                                <div class="heading"><h2>Purchase</h2></div>
+                                <div class="content">
+                                    <label for="nombre"> Name
+                                        <input type="text" required="required" name="nombre">
+                                    </label>
+
+                                    <label for="apellido"> Surname
+                                        <input type="text" required="required" name="apellido">
+                                    </label>
+
+                                    <label for="telefono"> Phone
+                                        <input type="text" required="required" data-validation="number" minlength="6" maxlength="11" name="telefono">
+                                    </label>
+
+                                    <label for="email"> E-mail
+                                        <input type="email" required="required" data-validation="email" name="email">
+                                    </label>
+
+                                    <hr/>
+
+                                    <label for="n_article"> Article
+                                        <input type="text" required="required" name="n_article" readonly>
+                                    </label>
+
+                                    <label for="country"> Country to send
+                                        <select name="country" required="required">
+                                            <option value="">
+                                                Choose one
+                                            </option>
+                                        </select>
+                                    </label>
+                                    
+                                    <label for="value"> Price
+                                        <input type="text" required="required" name="value" readonly>
+                                    </label>
+
+                                    <div>
+                                        <button class="button">Purchase</button>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                            <div class="box">
+                                <div class="heading"><h2>About us</h2></div>
+                                <div class="content">
+                                    <a href="http://www.example.com" target="_blank"><img src="http://placehold.it/339x65&text=logo" style="border:none;"/></a>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac suscipit ligula. Nam vitae ullamcorper nisl, ut convallis sapien. Curabitur ac felis ut magna luctus dapibus. Nam viverra id est quis aliquet. Nulla sed egestas arcu, id dignissim dolor. Integer dictum malesuada diam, vel bibendum est bibendum a. Donec nec lacus posuere, faucibus odio sit amet, iaculis felis. Aliquam erat volutpat. Nam feugiat finibus neque, nec ultricies tortor porttitor ac. Sed sed nibh eu sem suscipit imperdiet. Phasellus porta tempor ante, eget eleifend quam auctor sed. Cras rhoncus tristique molestie.</p>
+                                </div>
+                            </div>
+
+                            <div class="box">
+                                <div class="heading"><h2>Categories</h2></div>
+                                <div class="content">
+                                    <ul>
+                                        <li><a href="http://www.example.com">Free Examples</a></li>
+                                        <li><a href="http://www.example.com">Free Test for all</a></li>
+                                        <li><a href="http://www.example.com">More and more of testing</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--------------Footer--------------->
+        <footer>
+            <div class="wrap-footer gridsystem">
+                <div class="row">
+                    <div class="col-1-3">
+                        <div class="wrap-col">
+                            <div class="box">
+                                <div class="heading"><h2>Text Heading</h2></div>
+                                <div class="content">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra convallis auctor. Sed accumsan libero quis mi commodo et suscipit enim lacinia. Morbi rutrum vulputate est sed faucibus. </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2-3">
+                        <div class="wrap-col">
+                            <div class="box">
+                                <div class="heading"><h2>Text Heading</h2></div>
+                                <div class="content" id="console">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra convallis auctor. Sed accumsan libero quis mi commodo et suscipit enim lacinia. Morbi rutrum vulputate est sed faucibus. Nulla sed nisl mauris, id tristique tortor. Sed iaculis dapibus urna nec dictum. Proin non enim odio. Proin vitae turpis libero, eget feugiat enim. Sed fringilla facilisis convallis.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>Copyright © - <a href="http://www.example.com" target="_blank"> Totally</a> by test prueba</p>
+            </div>
+        </footer>
+
+
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+
+        <script src="js/vendor/jquery.cookie.js"></script>
+        <script src="js/vendor/jquery-waiting.js"></script>
+        <script src="js/vendor/jquery-validate/jquery.validate.min.js"></script>
+        <script src="js/vendor/jquery-validate/additional-methods.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/proyecto.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
