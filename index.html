@@ -30,7 +30,7 @@
         <link rel="stylesheet" href="css/base.css">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/responsive.css">
-        
+
         <link rel="stylesheet" href="js/vendor/jquery-modal-0.5.2/jquery.modal.css">
 
     </head>
@@ -131,7 +131,7 @@
                                             </option>
                                         </select>
                                     </label>
-                                    
+
                                     <label for="value"> Price
                                         <input type="text" required="required" name="value" readonly>
                                     </label>
@@ -167,6 +167,38 @@
                 </div>
             </div>
         </section>
+
+        <!--------------Modals--------------->
+
+        <div id="purchase_desc" class="modal">
+            <div>
+                <div class="client">
+                    Buyer:
+                    <hr/>
+                    
+                </div>
+                <div class="buying">
+                    <hr/>
+                    
+                </div>
+                <div class="country">
+                    <hr/>
+                    
+                </div>
+                <div class="price">
+                    <hr/>
+                    
+                </div>
+            </div>
+            <div>
+                <button class="button aceptar">Buy</button>
+                <a href="#close" rel="modal:close" class="button">Close</a>
+            </div>
+        </div>
+        
+        <div id="purchase_error" class="modal">
+        </div>
+
         <!--------------Footer--------------->
         <footer>
             <div class="wrap-footer gridsystem">
@@ -205,6 +237,7 @@
         <script src="js/vendor/jquery-modal-0.5.2/jquery.modal.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/vendor/jquery-validate/jquery.validate.min.js"></script>
         <script src="js/vendor/jquery-validate/additional-methods.min.js"></script>
+        <script src="js/vendor/jquery.serializeObject.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/proyecto.js"></script>
         <script src="js/main.js"></script>

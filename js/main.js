@@ -30,6 +30,8 @@ function articles_show(data) {
             }
             set_events_buy();
             set_events_country();
+
+            unsetpreload();
         }
     });
 
@@ -55,20 +57,22 @@ function pre_buy(id) {
         $("#purchase_article [name='n_article']").val(purchase.article.nombre);
     }
 
-    purchase.value_country = $("#purchase_article [name='country'] option:selected").val();
+    var idcountry = $("#purchase_article [name='country'] option:selected").val();
 
-    if (empty(purchase.value_country)) {
+    if (empty(idcountry)) {
         $("#purchase_article [name='value']").val('');
+        purchase.value_country = 0;
+    } else {
+        purchase.value_country = countries[idcountry].rel;
     }
 
     if (!empty(purchase.article) && !empty(purchase.value_country)) {
-        purchase.value = purchase.value_country * purchase.article.peso;
-        purchase.value += purchase.article.precio;
+        purchase.value = parseInt(purchase.value_country) * parseInt(purchase.article.peso) + parseInt(purchase.article.precio);
 
         $("#purchase_article [name='value']").val(purchase.value);
     }
 
-    console.log(purchase);
+    //console.log(purchase);
 }
 
 function load_2(data) {
@@ -81,7 +85,7 @@ function load_2(data) {
         countries[data[i].id] = data[i];
     }
 
-    load_ajaxly(test_url + "init.php/Articles/get_articles", [], true, "#articles", articles_show);
+    load_ajaxly(test_url + "init.php/Articles/get_articles", [], true, "#articles", articles_show, 'json');
 }
 
 function set_page() {
@@ -95,7 +99,7 @@ function set_page() {
         send_ajaxly(test_url + "init.php/Page/page_visit",
                 {referal_link: cookie.value, browser: navigator.userAgent});
 
-        console.log(cookie.value);
+        //console.log(cookie.value);
     } else {
         console.warn(cookie.value);
     }
@@ -104,15 +108,70 @@ function set_page() {
 }
 
 function unset_page() {
-    cookie.value = $.cookie(cookie.id);
     send_ajaxly(test_url + "init.php/Page/delete_visit",
-            {referal_link: cookie.value},false);
+            {referal_link: cookie.value}, false);
     $.removeCookie(cookie.id);
+}
+
+function set_events_formpurchase() {
+    $(document).on("submit", "#purchase_article", function () {
+
+        var bolvalid = $(this).valid();
+
+        if (bolvalid) {
+
+            if (!empty(purchase.article)) {
+                prepurchase_send();
+            } else {
+                $("#purchase_error").html("Error, no product to purchase");
+                $("#purchase_error").modal();
+            }
+
+        }
+
+        return false;
+    });
+}
+
+function prepurchase_send() {
+    var data_send = $("#purchase_article").serializeObject();
+    data_send.article = purchase.article;
+    data_send.referal_link = cookie.value;
+
+    var send = {prepurchase: data_send};
+
+    load_ajaxly(test_url + "init.php/Purchase/generate_prepurchase", send, true, null, show_prepurchase, 'json');
+
+    //console.log(send);
+}
+
+function show_prepurchase(data) {
+    if (!empty(data.error)) {
+        console.warn(data);
+
+    } else {
+        console.log(data);
+
+        $("#purchase_desc .client").html("<strong>Buyer</strong><div>Name: " + data.client.nombre + "</div>");
+        $("#purchase_desc .client").append("<div>Surname: " + data.client.apellido + "</div>");
+        $("#purchase_desc .client").append("<div>Phone: " + data.client.telefono + "</div>");
+        $("#purchase_desc .client").append("<div>E-Mail: " + data.client.email + "</div>");
+
+        $("#purchase_desc .buying").html("<hr/><strong>Article</strong><div>Name: " + data.article.nombre + "</div>");
+        $("#purchase_desc .buying").append("<div>Price: " + data.article.precio + "</div>");
+
+        $("#purchase_desc .country").html("<div>Send to: " + data.country.nombre + "</div>");
+
+        $("#purchase_desc .price").html("<hr/><strong>Price<strong/><div>$ " + data.value + " us</div>");
+
+        $("#purchase_desc").modal();
+
+    }
 }
 
 // Create a new anonymous function, to use as a wrapper
 (function () {
-    
+
     if (ENVIROMENT !== 'development' || document.URL.indexOf("localhost") <= -1) {
         test_url = '';
     }
@@ -124,6 +183,8 @@ function unset_page() {
     });
 
     $("#purchase_article").validate();
-    load_ajaxly(test_url + "init.php/Page/get_country", [], true, "#articles", load_2);
+    load_ajaxly(test_url + "init.php/Page/get_country", [], true, "#articles", load_2, 'json');
+
+    set_events_formpurchase();
 
 })();
