@@ -63,14 +63,14 @@ jQuery.fn.exists = function () {
 
 preload = function () {
     /*if (!$("#waiting4").exists()) {
-        $('body').append('<div><div id="waiting4"><center>Cargando</center></div></div>');
-    }
-    $('#waiting4').waiting({
-        className: 'waiting-circles',
-        elements: 8,
-        radius: 30,
-        auto: true
-    });*/
+     $('body').append('<div><div id="waiting4"><center>Cargando</center></div></div>');
+     }
+     $('#waiting4').waiting({
+     className: 'waiting-circles',
+     elements: 8,
+     radius: 30,
+     auto: true
+     });*/
 };
 
 function send_ajaxly(url, data, async, redirect) {
@@ -87,25 +87,28 @@ function send_ajaxly(url, data, async, redirect) {
         data: data,
         timeout: 3000,
         async: async,
-        dataType: 'json',
+        //dataType: 'json',
         beforeSend: function () {
             preload();
         },
         complete: function () {
             unsetpreload();
             if (typeof redirect !== 'undefined') {
-
                 window.location = redirect;
             }
         },
         cache: false,
         success: function (data, textStatus, jqXHR) {
+            if (ENVIROMENT === 'development') {
+                $('#console').html(data);
+            }
             return data;
         },
         error: function (jqXHR, textStatus, errorThrown) {
             //location.reload();
             $('#console').html(jqXHR.responseText);
             alert(textStatus + '\n4Un error ocurrió, porfavor, intentalo denuevo \n' + errorThrown);
+            //alert(jqXHR.responseText);
             //next = false;
         }
 
