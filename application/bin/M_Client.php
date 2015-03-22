@@ -31,8 +31,8 @@ class M_Client {
 
     public function try_add_client($args) {
         $arrg_verify = [
-            'telefono' => empty($this->get_telefono($args['telefono'])),
-            'email' => empty($this->get_email($args['email']))
+            'telefono' => ($this->get_telefono($args['telefono'])),
+            'email' => ($this->get_email($args['email']))
         ];
         return $arrg_verify;
     }

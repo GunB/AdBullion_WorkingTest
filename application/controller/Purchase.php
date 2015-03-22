@@ -51,7 +51,7 @@ class Purchase {
             $try_verify = $m_client->try_add_client($client);
 
             foreach ($try_verify as $value) {
-                if (empty($value)) {
+                if (!empty($value)) {
                     Error::send_error([
                         'error' => 2,
                         'verify' => $try_verify
