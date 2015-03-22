@@ -112,16 +112,16 @@ function unset_page() {
 
 // Create a new anonymous function, to use as a wrapper
 (function () {
+    
+    if (ENVIROMENT !== 'development' || document.URL.indexOf("localhost") <= -1) {
+        test_url = '';
+    }
 
     set_page();
 
     $(window).bind('beforeunload', function () {
         unset_page();
     });
-
-    if (ENVIROMENT !== 'development' || document.URL.indexOf("localhost") <= -1) {
-        test_url = '';
-    }
 
     $("#purchase_article").validate();
     load_ajaxly(test_url + "init.php/Page/get_country", [], true, "#articles", load_2);
