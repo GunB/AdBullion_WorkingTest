@@ -95,6 +95,11 @@ p{
     border-color: greenyellow;
 }
 
+#purchase_ok div{
+    text-align: center;
+    font-size: 13pt;
+}
+
 .button {
     text-align: center;
     
