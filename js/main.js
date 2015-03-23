@@ -7,7 +7,7 @@ var cookie = {
     'value': null
 };
 
-var ENVIROMENT = 'development';
+var ENVIROMENT = 'production';
 var test_url = 'http://localhost/AdBullion_WorkingTest_BACKK/';
 
 function articles_show(data) {
@@ -80,7 +80,6 @@ function load_2(data) {
     var that = $("#purchase_article [name='country']");
 
     for (i = 0; i < data.length; i++) {
-
         $(that).append("<option value='" + data[i].id + "'>" + data[i].nombre + "</option>");
         countries[data[i].id] = data[i];
     }
@@ -131,6 +130,23 @@ function set_events_formpurchase() {
 
         return false;
     });
+
+    $("#purchase_desc").on("click", ".aceptar", function () {
+        var data_send = $("#purchase_article").serializeObject();
+        data_send.article = purchase.article;
+        data_send.referal_link = cookie.value;
+
+        var send = {purchase: data_send};
+        load_ajaxly(test_url + "init.php/Purchase/purchase_article", send, true, "#articles", succes_purchase, 'json');
+    });
+}
+
+function succes_purchase(data) {
+    if (!data) {
+        $("#purchase_error").html("Error was ocurred, try again").modal();
+    } else {
+        $("#purchase_ok").modal();
+    }
 }
 
 function prepurchase_send() {
@@ -147,7 +163,38 @@ function prepurchase_send() {
 
 function show_prepurchase(data) {
     if (!empty(data.error)) {
-        console.warn(data);
+        //console.warn(data);
+
+        $("#purchase_error").html("");
+
+        switch (data.error) {
+            case 1:
+                $.each(data.verify, function (key, val) {
+                    if (empty(val)) {
+                        $("#purchase_error").append("<div>" + key + ": " + "Error" + "</div>");
+                        $("#purchase_article [name='" + key + "']").val("").valid();
+                    }
+                });
+                break;
+            case 2:
+                $.each(data.verify, function (key, val) {
+                    if (!empty(val)) {
+                        $("#purchase_error").append("<div>" + key + ":" + " already assign" + "</div>");
+                        $("#purchase_article [name='" + key + "']").addClass("error");
+                        $("#purchase_article [name='" + key + "']").val("").valid();
+                    }
+                });
+                break;
+        }
+
+        $("#purchase_error").modal();
+
+
+        for (i = 0; i < data.length; i++) {
+
+            $(that).append("<option value='" + data[i].id + "'>" + data[i].nombre + "</option>");
+            countries[data[i].id] = data[i];
+        }
 
     } else {
         console.log(data);
