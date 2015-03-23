@@ -29,6 +29,7 @@ class M_Client {
 
     public function verify_client($args, $db = null) {
         $args = array('params' => $args);
+        //var_dump($args);
         $data = $this->get_client($args, $db);
 
         return empty($data) ? null : $data[0];

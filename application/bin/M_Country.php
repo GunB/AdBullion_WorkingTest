@@ -28,7 +28,7 @@ class M_Country {
     }
 
     public function verify_country($args, $db = null) {
-        //$args = array('params' => $args);
+        $args = array('params' => $args);
         $data = $this->get_country($args, $db);
 
         return empty($data) ? null : $data[0];

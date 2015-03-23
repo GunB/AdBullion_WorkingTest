@@ -17,7 +17,7 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-define('ENVIRONMENT', isset($_SERVER['DATA']) ? $_SERVER['DATA'] : 'development');
+define('ENVIRONMENT', isset($_SERVER['DATA']) ? $_SERVER['DATA'] : 'production');
 
 /*
  * ---------------------------------------------------------------
@@ -35,6 +35,7 @@ switch (ENVIRONMENT) {
 
     case 'testing':
     case 'production':
+        runkit_function_redefine('var_dump','','return;');
         ini_set('display_errors', 0);
         if (version_compare(PHP_VERSION, '5.3', '>=')) {
             error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);

@@ -28,7 +28,7 @@ class M_Articles {
     }
 
     public function verify_article($args, $db = null) {
-        //$args = array('params' => $args);
+        $args = array('params' => $args);
         $data = $this->get_articles($args, $db);
 
         return empty($data) ? null : $data[0];

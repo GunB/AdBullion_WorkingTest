@@ -36,11 +36,10 @@ class Page {
     }
 
     public function delete_visit() {
-        $args = array(
-            'params' => array(
-                'referal_link' => filter_input(INPUT_POST, 'referal_link')
-            )
-        );
+        $args = [
+            'referal_link' => filter_input(INPUT_POST, 'referal_link')
+        ];
+                
         $m_page = new M_Page();
         $page_view = $m_page->get_view_page($args);
 

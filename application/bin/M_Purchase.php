@@ -23,15 +23,15 @@ class M_Purchase {
         $purchase = [
             'pagevisit_visit_ID' => $page->visit_ID,
             'client_id' => $client->id,
-            'country' => $country->id
+            'country_id' => $country->id
         ];
         
-        $db->simple_insert(PURCHASE, $purchase, true);
+        $data = $db->simple_insert(PURCHASE, $purchase, true);
         
         $article_purchase = [
-            'order_id' => $db->last_insert_id(),
+            'purchase_id' => $db->last_insert_id(),
             'article_id' => $article->id,
-            'value' => $purchase->value
+            'value' => $args->value
         ];
         
         $data = $db->simple_insert(PURCHASE_ARTICLE_ORDER, $article_purchase);
