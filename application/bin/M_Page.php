@@ -34,6 +34,7 @@ class M_Page {
             $db = new Database();
             $bolDb = false;
         }
+        $args = array('params' => $args);
         $data = $db->simple_select(PAGE, $args);
         if (!$bolDb)
             unset($db);

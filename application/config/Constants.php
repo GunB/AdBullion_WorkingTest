@@ -39,9 +39,9 @@ define("BASE", $base_url . $base_page);
 define("ARTICLE", "article");
 define("COUNTRY", "country");
 define("PAGE", "pagevisit");
-define("PURCHASE", "order");
+define("PURCHASE", "purchase");
 
-define("PURCHASE_ARTICLE_ORDER", "order_has_article");
+define("PURCHASE_ARTICLE_ORDER", "purchase_has_article");
 
 define("CLIENT", "client");
 

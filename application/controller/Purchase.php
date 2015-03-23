@@ -36,7 +36,7 @@ class Purchase {
             'email' => Email::verify_email($client['email']),
             'country' => ($m_country->verify_country(['id' => $prepurchase['country']], $db)),
             'article' => ($m_article->verify_article($prepurchase['article'], $db)),
-            'page' => $m_page->get_view_page($prepurchase['referal_link'], $db)
+            'page' => $m_page->get_view_page(['referal_link' => $prepurchase['referal_link']], $db)
         ];
 
         foreach ($verify as $value) {
@@ -50,6 +50,8 @@ class Purchase {
         }
 
         $verify['client'] = ($m_client->verify_client($client, $db));
+
+        //var_dump($verify['client']);
 
         if (empty($verify['client'])) {
             $try_verify = $m_client->try_add_client($client, $db);
@@ -69,6 +71,8 @@ class Purchase {
 
         $prepurchase['verify'] = $verify;
         $prepurchase['client'] = $client;
+        
+        //var_dump($prepurchase);
 
         return $prepurchase;
     }
@@ -116,25 +120,24 @@ class Purchase {
 
         $purchase = $this->verify_purchase($_POST['purchase'], $db);
 
-        //var_dump($prepurchase);
-
         if (!empty($purchase)) {
             $m_data = new M_Purchase();
 
             $purchase = $this->generate_values($purchase);
 
-            if (empty($purchase['verify']['client']['id'])) {
+            //var_dump($purchase);
+
+            if (empty($purchase['client']['id'])) {
                 $m_client->add_client($purchase['client'], $db);
                 $purchase['client']['id'] = $db->last_insert_id();
             }
 
-            $data = $m_purchase->create_purchase((object)$purchase['page'], (object)$purchase['client'],
-                    (object)$purchase['article'], (object)$purchase['country'], (object)$purchase, $db);
-            
+            $data = $m_purchase->create_purchase((object) $purchase['page'], (object) $purchase['client'], (object) $purchase['article'], (object) $purchase['country'], (object) $purchase, $db);
+
             unset($db);
 
             echo json_encode($data);
-            return 1;
+            return $data;
         } else {
             unset($db);
             echo json_encode(false);

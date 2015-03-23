@@ -36,18 +36,24 @@ class Database {
         //echo 'Conectado satisfactoriamente';
         //mysql_close($enlace);
     }
-    
-    function last_insert_id(){
+
+    function last_insert_id() {
         return $this->enlace->insert_id;
     }
 
     function do_query($strquery, $bolcontinue_chain = false) {
         $resp = [];
 
+        //var_dump($strquery);
+
         $this->enlace->autocommit(false);
         //$this->enlace->begin_transaction(1);
 
         if (($resultado = $this->enlace->query($strquery)) === FALSE) {
+            header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
+            echo 'DB Error:';
+            
+            var_dump(array_merge($this->enlace->error_list, ['query' => $strquery]));
             return FALSE;
         }
         //$resultado = mysqli_fetch_object($query);
@@ -110,13 +116,14 @@ class Database {
 
         $arr_query = [];
 
-        if (isset($args->id)) {
-            array_push($arr_query, "where id = '$args->id'");
-        }
-
         if (isset($args->params)) {
+
+            $query .= " where ";
+
+            //var_dump($args->params);
+
             foreach ($args->params as $key => $value) {
-                array_push($arr_query, "where $key = '$value'");
+                array_push($arr_query, " $key = '$value'");
             }
         }
 
@@ -137,7 +144,7 @@ class Database {
             $query .= " limit $args->limit ";
         }
 
-        //var_dump($query);
+        //isset($args->params) ? var_dump($query) : false;
 
         return $this->do_query($query);
     }
@@ -157,6 +164,8 @@ class Database {
         }
 
         $query .= "( " . implode(",", $columns) . " ) VALUES ( " . implode(",", $values) . " )";
+
+        //var_dump($query);
 
         return $this->do_query($query, $boolchain);
     }
